@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Pricing page</h1>
+    <form method="post" action="{% url 'proceed-with-payment' %}">
+      {% csrf_token %}
+      <input type="range" min="1" max="12" name="months" value="3">
+      <div id="proceed-with-payment">
+        {% if user.is_authenticated %}
+          <button hx-get="{% url 'get-payment-methods' %}" hx-target="#proceed-with-payment"
+          type="button" name="button" >Select this amount</button>
+        {% else %}
+          <a href="{% url 'get-payment-methods' %}" class="btn btn-primary">Strart!</a>
+        {% endif %}
+      </div>
+    </form>
+</div>
+{% endblock %}
